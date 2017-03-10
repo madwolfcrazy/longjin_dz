@@ -63,12 +63,17 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
         ),
     );
 
+    public static $classMap = array (
+        'NewsController' => __DIR__ . '/../..' . '/protect/controller/NewsController.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9::$prefixDirsPsr4;
             $loader->prefixesPsr0 = ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9::$classMap;
 
         }, null, ClassLoader::class);
     }
