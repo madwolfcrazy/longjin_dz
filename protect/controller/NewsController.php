@@ -6,7 +6,7 @@ use \helper\HtmlBrick;
 class NewsController extends \Controller
 {
     protected $newsHeadFields  =  ['aid','allowcomment','author',
-                                        'dateline','catid','title',
+                                        'dateline','catid','title','click1',
                                         'uid','pic','username','summary'];
     protected $cateFields  =  ['catname','catid','displayorder','articles'];
     public function get($request, $response, $args) {
@@ -49,6 +49,11 @@ class NewsController extends \Controller
                            ->orderBy('displayorder','ASC')
                            ->execute()
                            ->fetchAll();
-        return $response->withJson(['list'=>$list, 'subcates'=>$subcates]);
+        $categoryInfo  =  $this->pdo->select($this->cateFields)
+                               ->from('lgb_portal_category')
+                               ->where('catid', '=', $catid)
+                               ->execute()
+                               ->fetch();
+        return $response->withJson(['list'=>$list, 'subcates'=>$subcates,'categoryInfo'=>$categoryInfo]);
     }
 }

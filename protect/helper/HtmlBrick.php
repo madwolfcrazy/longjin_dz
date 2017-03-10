@@ -36,8 +36,8 @@ class HtmlBrick {
         $html  =  preg_replace('/<\!(.*?)(\-\->)/si','',$html);
         $html  =  preg_replace('/<\?(.*?)(\-\->)/si','',$html);
         //replace empty span
-        $html  =  str_replace('<span>','',$html);
-        $html  =  str_replace('</span>','',$html);
+        $html  =  preg_replace('/<span *>/i','',$html);
+        $html  =  preg_replace('/<\/span>/i','',$html);
         return $html;
     }
 
