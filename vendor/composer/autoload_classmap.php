@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Controller' => $baseDir . '/protect/controller/Controller.php',
     'NewsController' => $baseDir . '/protect/controller/NewsController.php',
 );
