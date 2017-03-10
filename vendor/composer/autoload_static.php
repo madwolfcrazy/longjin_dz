@@ -11,6 +11,14 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
     );
 
     public static $prefixLengthsPsr4 = array (
+        'h' => 
+        array (
+            'helper\\' => 7,
+        ),
+        'c' => 
+        array (
+            'controller\\' => 11,
+        ),
         'S' => 
         array (
             'Slim\\PDO\\' => 9,
@@ -32,6 +40,14 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
     );
 
     public static $prefixDirsPsr4 = array (
+        'helper\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/protect/helper',
+        ),
+        'controller\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/protect/controller',
+        ),
         'Slim\\PDO\\' => 
         array (
             0 => __DIR__ . '/..' . '/slim/pdo/src/PDO',

@@ -4,6 +4,10 @@
         "slim/pdo": "~1.9"
     },
     "autoload": {
-        "classmap": ["protect/controller"]
+        "classmap": ["protect/controller","protect/helper"],
+        "psr-4": {
+            "controller\\": "protect/controller",
+            "helper\\": "protect/helper"
+        }
     }
 }
