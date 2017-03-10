@@ -1,3 +1,5 @@
-!A test project for discuz!X 2.5 version 's RESTful API 
+# 一个测试项目 为Discuz!X 开发 RESTful API 接口
 
-so I dev this use php framework slim
+项目采用php slim 框架
+我目前主要使用的DX版本为2.5
+
