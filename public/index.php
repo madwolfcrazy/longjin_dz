@@ -12,6 +12,7 @@ $config  = require '../protect/config/index.php';
 $app  =  new \Slim\App($config);
 
 $app->get( '/news/{newsid}[/{page}]','\controller\NewsController:get');
+$app->get( '/cate/{catid}[/{page}]','\controller\NewsController:cate');
 /*
 /news/{newsid}[/{page}]
 /list/{catid}[/{page}]
