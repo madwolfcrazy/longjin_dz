@@ -2,6 +2,8 @@
 
 namespace controller;
 
+use \model\ThreadModel;
+
 class ForumController extends \Controller
 {
     protected $forumFields  = ['fid','fup','type','name','threads','posts','todayposts','lastpost','simple'];
@@ -37,6 +39,7 @@ class ForumController extends \Controller
         $page =  isset($args['page']) ? intval($args['page']) : 1;
         $perpage  =  20;
         $offset   =  ($page-1) * $perpage;
+        /*
         $threads  =  $this->pdo->select($this->threadFields)
                           ->from('lgb_forum_thread')
                           ->where('displayorder','>',-1)
@@ -45,6 +48,8 @@ class ForumController extends \Controller
                           ->limit($perpage, $offset)
                           ->execute()
                           ->fetchAll();
+                          */
+        $threads = ThreadModel::getList($fid,$page);
         return  $response->withJson(
                     [
                         'threads'=>$threads,

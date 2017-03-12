@@ -11,6 +11,10 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
     );
 
     public static $prefixLengthsPsr4 = array (
+        'm' => 
+        array (
+            'model\\' => 6,
+        ),
         'h' => 
         array (
             'helper\\' => 7,
@@ -40,6 +44,10 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
     );
 
     public static $prefixDirsPsr4 = array (
+        'model\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/protect/model',
+        ),
         'helper\\' => 
         array (
             0 => __DIR__ . '/../..' . '/protect/helper',
@@ -86,10 +94,12 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
 
     public static $classMap = array (
         'Controller' => __DIR__ . '/../..' . '/protect/controller/Controller.php',
+        'Model' => __DIR__ . '/../..' . '/protect/model/Model.php',
         'controller\\ForumController' => __DIR__ . '/../..' . '/protect/controller/ForumController.php',
         'controller\\NewsController' => __DIR__ . '/../..' . '/protect/controller/NewsController.php',
         'controller\\ThreadController' => __DIR__ . '/../..' . '/protect/controller/ThreadController.php',
         'helper\\HtmlBrick' => __DIR__ . '/../..' . '/protect/helper/HtmlBrick.php',
+        'model\\ThreadModel' => __DIR__ . '/../..' . '/protect/model/ThreadModel.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

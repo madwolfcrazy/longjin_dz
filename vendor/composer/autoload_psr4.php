@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'model\\' => array($baseDir . '/protect/model'),
     'helper\\' => array($baseDir . '/protect/helper'),
     'controller\\' => array($baseDir . '/protect/controller'),
     'Slim\\PDO\\' => array($vendorDir . '/slim/pdo/src/PDO'),
