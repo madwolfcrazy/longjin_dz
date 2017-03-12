@@ -86,7 +86,10 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
 
     public static $classMap = array (
         'Controller' => __DIR__ . '/../..' . '/protect/controller/Controller.php',
-        'NewsController' => __DIR__ . '/../..' . '/protect/controller/NewsController.php',
+        'controller\\ForumController' => __DIR__ . '/../..' . '/protect/controller/ForumController.php',
+        'controller\\NewsController' => __DIR__ . '/../..' . '/protect/controller/NewsController.php',
+        'controller\\ThreadController' => __DIR__ . '/../..' . '/protect/controller/ThreadController.php',
+        'helper\\HtmlBrick' => __DIR__ . '/../..' . '/protect/helper/HtmlBrick.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

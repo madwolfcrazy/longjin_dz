@@ -13,6 +13,9 @@ $app  =  new \Slim\App($config);
 
 $app->get( '/news/{newsid}[/{page}]','\controller\NewsController:get');
 $app->get( '/cate/{catid}[/{page}]','\controller\NewsController:cate');
+$app->get( '/forum/{fid}','\controller\ForumController:forum');
+$app->get( '/forumlist/{fid}','\controller\ForumController:threadlist');
+$app->get( '/thread/{tid}[/{page}]','\controller\ThreadController:get');
 /*
 /news/{newsid}[/{page}]
 /list/{catid}[/{page}]

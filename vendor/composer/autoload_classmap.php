@@ -7,5 +7,8 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Controller' => $baseDir . '/protect/controller/Controller.php',
-    'NewsController' => $baseDir . '/protect/controller/NewsController.php',
+    'controller\\ForumController' => $baseDir . '/protect/controller/ForumController.php',
+    'controller\\NewsController' => $baseDir . '/protect/controller/NewsController.php',
+    'controller\\ThreadController' => $baseDir . '/protect/controller/ThreadController.php',
+    'helper\\HtmlBrick' => $baseDir . '/protect/helper/HtmlBrick.php',
 );
