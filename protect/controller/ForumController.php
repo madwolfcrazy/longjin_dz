@@ -3,6 +3,7 @@
 namespace controller;
 
 use \model\ThreadModel;
+use \model\ForumModel;
 
 class ForumController extends \Controller
 {
@@ -15,19 +16,13 @@ class ForumController extends \Controller
     public function forum($request, $response, $args) 
     {
         $fid  =  intval($args['fid']);
-        $forum = $this->pdo->select($this->forumFields)
-                       ->from('lgb_forum_forum')
-                       ->where('fid', '=', $fid)
-                       ->where('status', '!=', 0)
-                       ->execute()
-                       ->fetch();
-        $subforums  =  $this->pdo->select($this->forumFields)
-                            ->from('lgb_forum_forum')
-                            ->where('fup','=',$fid)
-                            ->where('status', '!=', 0)
+        $forum = ForumModel::select($this->forumFields)
+                       ->where([['fid', '=', $fid],['status', '!=', 0]])
+                       ->first();
+        $subforums  =  ForumModel::select($this->forumFields)
+                            ->where([['fup','=',$fid],['status', '!=', 0]])
                             ->orderBy('displayorder','ASC')
-                            ->execute()
-                            ->fetchAll();
+                            ->get();
 
         return $response->withJson(
                     ['forum'=>$forum,'subforums'=>$subforums]

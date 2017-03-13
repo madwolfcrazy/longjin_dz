@@ -4,6 +4,7 @@ namespace controller;
 use \helper\HtmlBrick;
 use \model\NewsModel;
 use \model\NewsContentModel;
+use \model\CategoryModel;
 
 class NewsController extends \Controller
 {

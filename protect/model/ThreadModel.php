@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ThreadModel extends Model
 {
-    protected $table = 'forum_thread';
+    protected $table = 'forum_post';
     protected static $perpage = 20;
     protected static $fields  =  ['author','authorid','subject','dateline','fid','views','heats','lastposter','lastpost'];
 

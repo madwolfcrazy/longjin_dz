@@ -2,6 +2,8 @@
 
 namespace controller;
 
+use \model\ThreadModel;
+
 class ThreadController extends \Controller
 {
     protected $threadFields = [];
@@ -11,22 +13,15 @@ class ThreadController extends \Controller
         $page =  isset($args['page']) ? intval($args['page']) : 1;
         $perpage  = 20;
         $offset   =  ($page - 1) * $perpage;
-        $threadInfo  =  $this->pdo->select()
-                          ->from('lgb_forum_post')
-                          ->where('tid','=',$tid)
-                          ->where('invisible', '=', '0')
-                          ->where('first', '=', '1')
-                          ->execute()
-                          ->fetch();
-        $replies  =  $this->pdo->select()
-                          ->from('lgb_forum_post')
-                          ->where('tid','=',$tid)
-                          ->where('invisible','=','0')
-                          ->where('first','=','0')
+        $threadInfo  =  ThreadModel::select()
+                          ->where([['tid','=',$tid],['invisible', '=', '0'],['first', '=', '1']])
+                          ->first();
+        $replies  =  ThreadModel::select()
+                          ->where([['tid','=',$tid],['invisible','=','0'],['first','=','0']])
                           ->orderBy('dateline','ASC')
-                          ->limit($perpage, $offset)
-                          ->execute()
-                          ->fetchAll();
+                          ->offset($offset)
+                          ->limit($perpage)
+                          ->get();
 
         return $response->withJson(['replies'=>$replies, 'threadInfo'=>$threadInfo]);
     }
