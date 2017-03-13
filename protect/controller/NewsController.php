@@ -2,6 +2,8 @@
 namespace controller;
 
 use \helper\HtmlBrick;
+use \model\NewsModel;
+use \model\NewsContentModel;
 
 class NewsController extends \Controller
 {
@@ -11,19 +13,19 @@ class NewsController extends \Controller
     protected $cateFields  =  ['catname','catid','displayorder','articles'];
     public function get($request, $response, $args) {
         $newsid  =  $args['newsid'];
-        $news  =  $this->pdo->select($this->newsHeadFields)
-                        ->from('lgb_portal_article_title')
+        $news  =  NewsModel::select($this->newsHeadFields)
                         ->where('aid', '=', $newsid)
-                        ->execute()->fetch();
+                        ->first();
         $page  =  isset($args['page']) ? intval($args['page']) : 1;
-        $content  =  $this->pdo->select(['content'])->from('lgb_portal_article_content')
-                          ->where('aid', '=',$newsid)
-                          ->where('pageorder', '=',$page)
-                          ->execute()->fetch();
+
+        $content  =  NewsContentModel::select(['content'])
+                          ->where([['aid', '=',$newsid],['pageorder', '=',$page]])
+                          ->first();
+
         if(! $news) {
             return $response->withStatus(404);
         }
-        $news['content']  =  isset($content['content']) ? HtmlBrick::pat($content['content']) : null;
+        $news['content']  =  isset($content->content) ? HtmlBrick::pat($content->content) : null;
         return $response->withJson(['news'=>$news]);
     }
 
@@ -36,24 +38,18 @@ class NewsController extends \Controller
         $page   =  isset($args['page']) ? intval($args['page']) : 1;
         $limit  =  20;
         $offset =  ($page - 1) * $limit;
-        $list   =  $this->pdo->select($this->newsHeadFields)
-                        ->from('lgb_portal_article_title')
-                        ->where('catid','=',$catid)
-                        ->where('status', '=', 0)
-                        ->limit($limit, $offset)
-                        ->execute()
-                        ->fetchAll();
-        $subcates  =  $this->pdo->select($this->cateFields)
-                           ->from('lgb_portal_category')
+        $list   =  NewsModel::select($this->newsHeadFields)
+                        ->where([['catid','=',$catid],['status', '=', 0]])
+                        ->offset($offset)
+                        ->limit($limit)
+                        ->get();
+        $subcates  =  CategoryModel::select($this->cateFields)
                            ->where('upid', '=', $catid)
                            ->orderBy('displayorder','ASC')
-                           ->execute()
-                           ->fetchAll();
-        $categoryInfo  =  $this->pdo->select($this->cateFields)
-                               ->from('lgb_portal_category')
+                           ->get();
+        $categoryInfo  =  CategoryModel::select($this->cateFields)
                                ->where('catid', '=', $catid)
-                               ->execute()
-                               ->fetch();
+                               ->first();
         return $response->withJson(['list'=>$list, 'subcates'=>$subcates,'categoryInfo'=>$categoryInfo]);
     }
 }

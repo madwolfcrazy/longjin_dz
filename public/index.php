@@ -9,7 +9,23 @@ require '../vendor/autoload.php';
 
 $config  = require '../protect/config/index.php';
 
-$app  =  new \Slim\App($config);
+$container  =  new \Slim\Container( [
+        'settings' => [
+            'db' => $config['db'],
+            'displayErrorDetails' => true,
+        ]
+    ]
+);
+
+$container['db']  =  function ($container) {
+    $capsule  =  new \Illuminate\Database\Capsule\Manager();
+    $capsule->addConnection($container['settings']['db']);
+    $capsule->setAsGlobal();
+    $capsule->bootEloquent();
+    return $capsule;
+};
+
+$app = new \Slim\App($container); 
 
 $app->get( '/news/{newsid}[/{page}]','\controller\NewsController:get');
 $app->get( '/cate/{catid}[/{page}]','\controller\NewsController:cate');
@@ -33,5 +49,7 @@ $app->add(function ($req, $res, $next) {
             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 });
+
+$container->get("db");
 
 $app->run();

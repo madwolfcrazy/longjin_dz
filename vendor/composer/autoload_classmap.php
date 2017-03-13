@@ -7,10 +7,12 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Controller' => $baseDir . '/protect/controller/Controller.php',
-    'Model' => $baseDir . '/protect/model/Model.php',
+    'NewsContentModel' => $baseDir . '/protect/model/NewsContentModel.php',
     'controller\\ForumController' => $baseDir . '/protect/controller/ForumController.php',
     'controller\\NewsController' => $baseDir . '/protect/controller/NewsController.php',
     'controller\\ThreadController' => $baseDir . '/protect/controller/ThreadController.php',
     'helper\\HtmlBrick' => $baseDir . '/protect/helper/HtmlBrick.php',
+    'model' => $baseDir . '/protect/model/NewsContentModel.php',
+    'model\\NewsModel' => $baseDir . '/protect/model/NewsModel.php',
     'model\\ThreadModel' => $baseDir . '/protect/model/ThreadModel.php',
 );
