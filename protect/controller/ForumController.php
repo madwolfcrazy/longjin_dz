@@ -23,12 +23,20 @@ class ForumController extends \Controller
                             ->where([['fup','=',$fid],['status', '!=', 0]])
                             ->orderBy('displayorder','ASC')
                             ->get();
+        $threadlist  =  [];
+        if( in_array($forum['type'], array('sub', 'forum'))) {
+            $threadlist  =  ThreadModel::getlist($fid,1);
+        }
 
         return $response->withJson(
-                    ['forum'=>$forum,'subforums'=>$subforums]
+                    ['forum'=>$forum,'subforums'=>$subforums,'threadlist'=>$threadlist]
                 );
     }
 
+    /**
+      *
+      *
+      **/
     public function threadlist($request, $response, $args) {
         $fid  =  intval($args['fid']);
         $page =  isset($args['page']) ? intval($args['page']) : 1;

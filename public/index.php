@@ -30,7 +30,7 @@ $app = new \Slim\App($container);
 $app->get( '/news/{newsid}[/{page}]','\controller\NewsController:get');
 $app->get( '/cate/{catid}[/{page}]','\controller\NewsController:cate');
 $app->get( '/forum/{fid}','\controller\ForumController:forum');
-$app->get( '/forumlist/{fid}','\controller\ForumController:threadlist');
+$app->get( '/forumlist/{fid}[/{page}]','\controller\ForumController:threadlist');
 $app->get( '/thread/{tid}[/{page}]','\controller\ThreadController:get');
 /*
 /news/{newsid}[/{page}]
