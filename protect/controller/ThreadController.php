@@ -17,13 +17,14 @@ class ThreadController extends \Controller
                           ->where([['tid','=',$tid],['invisible', '=', '0'],['first', '=', '1']])
                           ->first();
         $replies  =  ThreadModel::select()
-                          ->where([['tid','=',$tid],['invisible','=','0'],['first','=','0']])
+                          ->where([['tid','=',$tid],['invisible','=','0']])
                           ->orderBy('dateline','ASC')
                           ->offset($offset)
                           ->limit($perpage)
                           ->get();
+        $pages =  ThreadModel::paginationNum($tid);
 
-        return $response->withJson(['replies'=>$replies, 'threadInfo'=>$threadInfo]);
+        return $response->withJson(['replies'=>$replies, 'threadInfo'=>$threadInfo,'pages'=>$pages]);
     }
 
 }

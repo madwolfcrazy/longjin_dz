@@ -27,9 +27,12 @@ $container['db']  =  function ($container) {
 
 $app = new \Slim\App($container); 
 
+$app->get( '/',function($r,$rr) {
+        return $rr->withJson([]);
+        });
 $app->get( '/news/{newsid}[/{page}]','\controller\NewsController:get');
 $app->get( '/cate/{catid}[/{page}]','\controller\NewsController:cate');
-$app->get( '/forum/{fid}','\controller\ForumController:forum');
+$app->get( '/forum[/{fid}[/{page}]]','\controller\ForumController:forum');
 $app->get( '/forumlist/{fid}[/{page}]','\controller\ForumController:threadlist');
 $app->get( '/thread/{tid}[/{page}]','\controller\ThreadController:get');
 /*
