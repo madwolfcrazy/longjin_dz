@@ -10,7 +10,7 @@ class NewsController extends \Controller
 {
     protected $newsHeadFields  =  ['aid','allowcomment','author',
                                         'dateline','catid','title','click1',
-                                        'uid','pic','username','summary'];
+                                        'uid','pic','username','summary','contents'];
     protected $cateFields  =  ['catname','catid','displayorder','articles'];
     public function get($request, $response, $args) {
         $newsid  =  $args['newsid'];

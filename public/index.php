@@ -13,6 +13,7 @@ $container  =  new \Slim\Container( [
         'settings' => [
             'db' => $config['db'],
             'displayErrorDetails' => true,
+            'url_pre' => $config['url_pre'],
         ]
     ]
 );

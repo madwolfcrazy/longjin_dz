@@ -3,6 +3,8 @@
 namespace controller;
 
 use \model\ThreadModel;
+use \model\ThreadPostModel;
+use \model\ForumAttachmentModel;
 
 class ThreadController extends \Controller
 {
@@ -14,17 +16,24 @@ class ThreadController extends \Controller
         $perpage  = 20;
         $offset   =  ($page - 1) * $perpage;
         $threadInfo  =  ThreadModel::select()
-                          ->where([['tid','=',$tid],['invisible', '=', '0'],['first', '=', '1']])
+                          ->where([['tid','=',$tid],['status', '>', -1]])
                           ->first();
-        $replies  =  ThreadModel::select()
-                          ->where([['tid','=',$tid],['invisible','=','0']])
-                          ->orderBy('dateline','ASC')
+        $replies  =  ThreadPostModel::select()
+                          ->where([['tid','=',$tid],['invisible','>',-1]])
+                          ->orderBy('position','ASC')
                           ->offset($offset)
                           ->limit($perpage)
                           ->get();
-        $pages =  ThreadModel::paginationNum($tid);
+        //
+        $URL_pre  =  $this->ci->get('settings')['url_pre'];
+        foreach($replies as &$reply) {
+            $reply['attachments']  =  ForumAttachmentModel::getByPid($reply['pid'],$URL_pre);
+        }
+        $replyNum  =  ThreadPostModel::where([['tid','=',$tid],['status','>',-1],['first','=',0]])
+                          ->count();
 
-        return $response->withJson(['replies'=>$replies, 'threadInfo'=>$threadInfo,'pages'=>$pages]);
+
+        return $response->withJson(['replies'=>$replies, 'threadInfo'=>$threadInfo,'replyNum'=>$replyNum]);
     }
 
 }
