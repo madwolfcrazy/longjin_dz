@@ -2,7 +2,8 @@
     "require": {
         "slim/slim": "^3.0",
         "slim/pdo": "~1.9",
-        "illuminate/database": "^5.2"
+        "illuminate/database": "^5.2",
+        "tuupola/slim-jwt-auth": "^2.3"
     },
     "autoload": {
         "classmap": ["protect/controller","protect/helper","protect/model"],

@@ -31,10 +31,12 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\Translation\\' => 30,
             'Slim\\PDO\\' => 9,
+            'Slim\\Middleware\\' => 16,
             'Slim\\' => 5,
         ),
         'P' => 
         array (
+            'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
         ),
@@ -48,6 +50,7 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
         ),
         'F' => 
         array (
+            'Firebase\\JWT\\' => 13,
             'FastRoute\\' => 10,
         ),
         'C' => 
@@ -81,9 +84,17 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
         array (
             0 => __DIR__ . '/..' . '/slim/pdo/src/PDO',
         ),
+        'Slim\\Middleware\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/tuupola/slim-jwt-auth/src',
+        ),
         'Slim\\' => 
         array (
             0 => __DIR__ . '/..' . '/slim/slim/Slim',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
         'Psr\\Http\\Message\\' => 
         array (
@@ -112,6 +123,10 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
         'Illuminate\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/illuminate/container',
+        ),
+        'Firebase\\JWT\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
         'FastRoute\\' => 
         array (
@@ -142,14 +157,17 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
 
     public static $classMap = array (
         'Controller' => __DIR__ . '/../..' . '/protect/controller/Controller.php',
-        'NewsContentModel' => __DIR__ . '/../..' . '/protect/model/NewsContentModel.php',
         'controller\\ForumController' => __DIR__ . '/../..' . '/protect/controller/ForumController.php',
         'controller\\NewsController' => __DIR__ . '/../..' . '/protect/controller/NewsController.php',
         'controller\\ThreadController' => __DIR__ . '/../..' . '/protect/controller/ThreadController.php',
         'helper\\HtmlBrick' => __DIR__ . '/../..' . '/protect/helper/HtmlBrick.php',
-        'model' => __DIR__ . '/../..' . '/protect/model/NewsContentModel.php',
+        'model\\CategoryModel' => __DIR__ . '/../..' . '/protect/model/CategoryModel.php',
+        'model\\ForumAttachmentModel' => __DIR__ . '/../..' . '/protect/model/ForumAttachmentModel.php',
+        'model\\ForumModel' => __DIR__ . '/../..' . '/protect/model/ForumModel.php',
+        'model\\NewsContentModel' => __DIR__ . '/../..' . '/protect/model/NewsContentModel.php',
         'model\\NewsModel' => __DIR__ . '/../..' . '/protect/model/NewsModel.php',
         'model\\ThreadModel' => __DIR__ . '/../..' . '/protect/model/ThreadModel.php',
+        'model\\ThreadPostModel' => __DIR__ . '/../..' . '/protect/model/ThreadPostModel.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

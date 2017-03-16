@@ -3,9 +3,9 @@
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
+date_default_timezone_set('Asia/Shanghai');
 
 require '../vendor/autoload.php';
-
 
 $config  = require '../protect/config/index.php';
 
@@ -50,9 +50,31 @@ $app->add(function ($req, $res, $next) {
     $response = $next($req, $res);
     return $response
             ->withHeader('Access-Control-Allow-Origin', '*')
-            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization,')
             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 });
+
+//
+$app->add(new \Slim\Middleware\JwtAuthentication( [
+    'regexp' => '/(.*)/',
+    'secret' => 'jwtauth',
+    'rules' =>[
+        new \Slim\Middleware\JwtAuthentication\RequestPathRule([
+            'path' => '/',
+            'passthrough' => [
+                '/',
+                '/thread',
+                '/news',
+                '/cate',
+                '/forum',
+                '/forumlist',
+            ]
+        ]),
+        new \Slim\Middleware\JwtAuthentication\RequestMethodRule([
+            'passthrough' => ["OPTIONS"]
+        ]),
+    ]
+]));
 
 $container->get("db");
 
