@@ -14,7 +14,8 @@ $container  =  new \Slim\Container( [
             'db' => $config['db'],
             'displayErrorDetails' => true,
             'url_pre' => $config['url_pre'],
-        ]
+            'jwt_secret' => $config['jwt_secret'],
+        ],
     ]
 );
 
@@ -24,6 +25,9 @@ $container['db']  =  function ($container) {
     $capsule->setAsGlobal();
     $capsule->bootEloquent();
     return $capsule;
+};
+$container['encoder']  =  function ($container) {
+    return new Tuupola\Base62;
 };
 
 $app = new \Slim\App($container); 
@@ -36,6 +40,8 @@ $app->get( '/cate/{catid}[/{page}]','\controller\NewsController:cate');
 $app->get( '/forum[/{fid}[/{page}]]','\controller\ForumController:forum');
 $app->get( '/forumlist/{fid}[/{page}]','\controller\ForumController:threadlist');
 $app->get( '/thread/{tid}[/{page}]','\controller\ThreadController:get');
+//
+include "../protect/routes/token.php";
 /*
 /news/{newsid}[/{page}]
 /list/{catid}[/{page}]
@@ -56,14 +62,12 @@ $app->add(function ($req, $res, $next) {
 
 //
 $app->add(new \Slim\Middleware\JwtAuthentication( [
-    'regexp' => '/(.*)/',
-    'secret' => 'jwtauth',
+    'secret' => $config['jwt_secret'],
     'rules' =>[
         new \Slim\Middleware\JwtAuthentication\RequestPathRule([
             'path' => '/',
             'passthrough' => [
-                '/',
-                '/thread',
+                '/token',
                 '/news',
                 '/cate',
                 '/forum',

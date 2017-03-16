@@ -1009,5 +1009,55 @@
             "middleware",
             "psr-7"
         ]
+    },
+    {
+        "name": "tuupola/base62",
+        "version": "0.8.0",
+        "version_normalized": "0.8.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/tuupola/base62.git",
+            "reference": "5218b96d005e43124ae9d763efb091ee20505ae9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/tuupola/base62/5218b96d005e43124ae9d763efb091ee20505ae9.zip",
+            "reference": "5218b96d005e43124ae9d763efb091ee20505ae9",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.5 || ^7.0"
+        },
+        "require-dev": {
+            "paragonie/random_compat": "^2.0",
+            "phpbench/phpbench": "^0.13.0",
+            "phpunit/phpunit": "^4.8",
+            "squizlabs/php_codesniffer": "^2.5"
+        },
+        "time": "2017-03-12T07:14:17+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Tuupola\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mika Tuupola",
+                "email": "tuupola@appelsiini.net",
+                "homepage": "http://www.appelsiini.net/",
+                "role": "Developer"
+            }
+        ],
+        "description": "Base62 encoder and decoder for arbitrary data",
+        "homepage": "https://github.com/tuupola/base62",
+        "keywords": [
+            "base62"
+        ]
     }
 ]

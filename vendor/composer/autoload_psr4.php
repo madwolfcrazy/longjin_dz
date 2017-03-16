@@ -9,6 +9,7 @@ return array(
     'model\\' => array($baseDir . '/protect/model'),
     'helper\\' => array($baseDir . '/protect/helper'),
     'controller\\' => array($baseDir . '/protect/controller'),
+    'Tuupola\\' => array($vendorDir . '/tuupola/base62/src'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Component\\Translation\\' => array($vendorDir . '/symfony/translation'),
     'Slim\\PDO\\' => array($vendorDir . '/slim/pdo/src/PDO'),

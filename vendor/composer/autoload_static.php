@@ -26,6 +26,10 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
         array (
             'controller\\' => 11,
         ),
+        'T' => 
+        array (
+            'Tuupola\\' => 8,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
@@ -71,6 +75,10 @@ class ComposerStaticInitbb80a9453f7c7314a7180d5fccb171e9
         'controller\\' => 
         array (
             0 => __DIR__ . '/../..' . '/protect/controller',
+        ),
+        'Tuupola\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/tuupola/base62/src',
         ),
         'Symfony\\Polyfill\\Mbstring\\' => 
         array (
