@@ -21,14 +21,14 @@ return [
         'driver' => 'mysql',
         'username' =>'longjing_dev',
         'password' =>'longjing_dev',
-        'database' => 'dzx_25',
+        'database' => 'YOURDATABASE',
         'charset'=>'utf8',
         'collation'=>'utf8_unicode_ci',
-        'prefix'=>'dzx25_',
+        'prefix'=>'pre_',
     ],
     'debugging' => true,
     'url_pre'  => 'http://xxx.com/DZX2.5/',
-    'jwt_secret' => '(*UJ(bk<S-F7>(^T(*a(^T(O)(*&YR*',
+    'jwt_secret' => 'some word by your balalala',
     'logined_scope' => [
         'comment_create'
     ],
