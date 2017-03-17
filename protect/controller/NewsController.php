@@ -85,7 +85,7 @@ class NewsController extends \Controller
         $offset =  ($page - 1) * $limit;
         $commentBody  =  $request->getParsedBody()['content'];
         $jwt_scope  =  ($this->ci->get('jwt'));
-        if( is_object($jwt_scope)  && in_array("comment_create", $jwt_scope->scope)) {
+        if( ($jwt_scope)  && in_array("comment_create", $jwt_scope->scope)) {
             var_dump('Save comment');
         }else{
             return $response->withJson(['require_high_privilege'=>true]);

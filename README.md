@@ -6,3 +6,31 @@
 ### 有空就填坑... ...
 #### 填坑... ...
 ##### 坑...
+
+## /protect/config/index.php 
+
+配置文件示例
+
+```
+<?php
+# protect/config/index.php
+
+return [
+    'db' => [
+        'host' => 'xxx',
+        'driver' => 'mysql',
+        'username' =>'longjing_dev',
+        'password' =>'longjing_dev',
+        'database' => 'dzx_25',
+        'charset'=>'utf8',
+        'collation'=>'utf8_unicode_ci',
+        'prefix'=>'dzx25_',
+    ],
+    'debugging' => true,
+    'url_pre'  => 'http://xxx.com/DZX2.5/',
+    'jwt_secret' => '(*UJ(bk<S-F7>(^T(*a(^T(O)(*&YR*',
+    'logined_scope' => [
+        'comment_create'
+    ],
+];
+```
