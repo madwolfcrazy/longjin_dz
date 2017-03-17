@@ -22,7 +22,7 @@ class LoginController extends \Controller
             $monilogin = ['result'=>true, 'username'=>$username,'user_id'=>1998];
             if($monilogin['result']) {
                 //return logined jwt
-                $scopes  =  $this->ci->get('settings')['logined_scopes'];
+                $scopes  =  $this->ci->get('settings')['logined_scope'];
                 $now     =  new \DateTime();
                 $future  =  new \DateTime("now +2 hours");
                 $base62  =  new Base62;
