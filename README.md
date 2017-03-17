@@ -7,30 +7,8 @@
 #### 填坑... ...
 ##### 坑...
 
-## /protect/config/index.php 
-
-配置文件示例
 
 ```
 <?php
-# protect/config/index.php
-
-return [
-    'db' => [
-        'host' => 'xxx',
-        'driver' => 'mysql',
-        'username' =>'longjing_dev',
-        'password' =>'longjing_dev',
-        'database' => 'YOURDATABASE',
-        'charset'=>'utf8',
-        'collation'=>'utf8_unicode_ci',
-        'prefix'=>'pre_',
-    ],
-    'debugging' => true,
-    'url_pre'  => 'http://xxx.com/DZX2.5/',
-    'jwt_secret' => 'some word by your balalala',
-    'logined_scope' => [
-        'comment_create'
-    ],
-];
+    exit('keep moving');
 ```
