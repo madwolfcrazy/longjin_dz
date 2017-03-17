@@ -74,6 +74,7 @@ $app->add(new \Slim\Middleware\JwtAuthentication( [
                 '/cate',
                 '/forum',
                 '/forumlist',
+                '/thread',
             ]
         ]),
         new \Slim\Middleware\JwtAuthentication\RequestMethodRule([
