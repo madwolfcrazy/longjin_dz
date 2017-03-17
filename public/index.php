@@ -26,9 +26,11 @@ $container['db']  =  function ($container) {
     $capsule->bootEloquent();
     return $capsule;
 };
+/*
 $container['encoder']  =  function ($container) {
     return new Tuupola\Base62;
 };
+*/
 
 $app = new \Slim\App($container); 
 

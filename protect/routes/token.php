@@ -22,12 +22,13 @@ $app->post("/token", function ($request, $response, $arguments) {
     $now = new DateTime();
     $future = new DateTime("now +2 hours");
     $server = $request->getServerParams();
-    $jti = Base62::encode(random_bytes(16));
+    $base62  =  new Base62;
+    $jti = $base62->encode(random_bytes(16));
     $payload = [
         "iat" => $now->getTimeStamp(),
         "exp" => $future->getTimeStamp(),
         "jti" => $jti,
-        "sub" => $server["PHP_AUTH_USER"],
+        "sub" => @$server["PHP_AUTH_USER"],
         "scope" => $scopes
     ];
     $secret  =  $this->get('settings')['jwt_secret'];

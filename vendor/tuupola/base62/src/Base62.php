@@ -37,7 +37,7 @@ class Base62
         return $this->encoder->encode($data);
     }
 
-    public function decode($data, $integer = false)
+    public static function decode($data, $integer = false)
     {
         return $this->encoder->decode($data, $integer);
     }
