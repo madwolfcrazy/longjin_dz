@@ -5,6 +5,8 @@ use \helper\HtmlBrick;
 use \model\NewsModel;
 use \model\NewsContentModel;
 use \model\CategoryModel;
+use \model\NewsCommentModel;
+use Firebase\JWT\JWT;
 
 class NewsController extends \Controller
 {
@@ -52,5 +54,46 @@ class NewsController extends \Controller
                                ->where('catid', '=', $catid)
                                ->first();
         return $response->withJson(['list'=>$list, 'subcates'=>$subcates,'categoryInfo'=>$categoryInfo]);
+    }
+
+    /**
+      *
+      *
+      **/
+    public function comment($request, $response, $args) {
+        $newsid =  $args['newsid'];
+        $page   =  isset($args['page']) ? intval($args['page']) : 1;
+        $limit  =  20;
+        $offset =  ($page - 1) * $limit;
+        $comments  =  NewsCommentModel::select()
+                        ->where([['id', '=', $newsid],['idtype','=','aid']])
+                        ->orderBy('dateline','DESC')
+                        ->offset($offset)
+                        ->limit($limit)
+                        ->get();
+        return $response->withJson(['comments'=>$comments]);
+    }
+
+    /**
+      *
+      *
+      **/
+    public function create($request, $response, $args) {
+        $server = $request->getServerParams();
+        $token  =   $server['HTTP_AUTHORIZATION'];
+        $a  =  JWT::decode($token, $this->ci->get('settings')['jwt_secret'],"HS256");
+        var_dump($a);
+        exit();
+        $newsid =  intval($args['newsid']);
+        $page   =  isset($args['page']) ? intval($args['page']) : 1;
+        $limit  =  20;
+        $offset =  ($page - 1) * $limit;
+        $commentBody  =  $request->getParsedBody()['content'];
+        $jwt_scope  =  ($this->ci->get('jwt'));
+        if( is_array($jwt_scope)  && in_array("comment_create", $this->ci->get('jwt')->scope)) {
+            var_dump('Save comment');
+        }else{
+            return $response->withJson(['require_high_privilege'=>true]);
+        }
     }
 }
