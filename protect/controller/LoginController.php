@@ -14,13 +14,21 @@ class LoginController extends \Controller
       *
       **/
     public function login($request, $response, $args) {
+        include '../protect/config/ucenter.php';
+        include '../vendor/comsenz/uc_client/src/client.php';
         $argsPost  =  $request->getParsedBody();
         $username  =  isset($argsPost['username']) ? trim($argsPost['username']) : FALSE;
         $password  =  isset($argsPost['password']) ? trim($argsPost['password']) : FALSE;
+        if(strtolower(UC_CHARSET) != 'utf-8') {
+            $username  =  iconv('utf-8', UC_CHARSET, $username);
+        }
         if( $username !== FALSE and $password != FALSE) {
             //do the login process
-            $monilogin = ['result'=>true, 'username'=>$username,'user_id'=>1998];
-            if($monilogin['result']) {
+            $login_result  =  uc_user_login($username, $password);
+            if($login_result[0] > 0) {
+                if(strtolower(UC_CHARSET) != 'utf-8') {
+                    $login_result[1]  =  iconv('utf-8', UC_CHARSET, $login_result[1]);
+                }
                 //return logined jwt
                 $scopes  =  $this->ci->get('settings')['logined_scope'];
                 $now     =  new \DateTime();
@@ -31,18 +39,19 @@ class LoginController extends \Controller
                     "iat" => $now->getTimeStamp(),
                     "exp" => $future->getTimeStamp(),
                     "jti" => $jti,
-                    "sub" => 'JWT of '.$username,
+                    "sub" => 'JWT of '.$login_result[1],
                     "scope"     => $scopes,
-                    "user_id"   => $monilogin['user_id'],
-                    "username"  => $username,
+                    "user_id"   => $login_result[0],
+                    "username"  => $login_result[1],
                 ];
                 $secret  =  $this->ci->get('settings')['jwt_secret'];
                 $token   =  JWT::encode($payload, $secret, "HS256");
-                $data["status"]  = "ok";
+                $data["loginResult"]  = "SUCCESS";
                 $data["token"]   = $token;
                 $data['expire']  = $future->getTimestamp();
                 return $response->withJson($data);
             }
         }
+        return $response->withJson(['loginResult'=>'FAIL']);
     }
 }
