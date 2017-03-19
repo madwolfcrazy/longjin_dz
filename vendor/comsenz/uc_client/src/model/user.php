@@ -6,6 +6,7 @@
 
 	$Id: user.php 1179 2014-11-03 07:11:25Z hypowang $
 */
+namespace ucenter;
 
 !defined('IN_UC') && exit('Access Denied');
 

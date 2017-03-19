@@ -6,6 +6,7 @@
 
 	$Id: app.php 1059 2011-03-01 07:25:09Z monkey $
 */
+namespace ucenter;
 
 !defined('IN_UC') && exit('Access Denied');
 

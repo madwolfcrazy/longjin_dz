@@ -6,6 +6,7 @@
 
 	$Id: client.php 1179 2014-11-03 07:11:25Z hypowang $
 */
+namespace ucenter;
 
 if(!defined('UC_API')) {
 	exit('Access denied');
@@ -358,7 +359,8 @@ function uc_user_register($username, $password, $email, $questionid = '', $answe
 
 function uc_user_login($username, $password, $isuid = 0, $checkques = 0, $questionid = '', $answer = '', $ip = '') {
 	$isuid = intval($isuid);
-	$return = call_user_func(UC_API_FUNC, 'user', 'login', array('username'=>$username, 'password'=>$password, 'isuid'=>$isuid, 'checkques'=>$checkques, 'questionid'=>$questionid, 'answer'=>$answer, 'ip' => $ip));
+	$return = call_user_func(__NAMESPACE__.'\\'.UC_API_FUNC, 'user', 'login', array('username'=>$username, 'password'=>$password, 'isuid'=>$isuid, 'checkques'=>$checkques, 'questionid'=>$questionid, 'answer'=>$answer, 'ip' => $ip));
+	//$return = uc_api_post( 'user', 'login', array('username'=>$username, 'password'=>$password, 'isuid'=>$isuid, 'checkques'=>$checkques, 'questionid'=>$questionid, 'answer'=>$answer, 'ip' => $ip));
 	return UC_CONNECT == 'mysql' ? $return : uc_unserialize($return);
 }
 

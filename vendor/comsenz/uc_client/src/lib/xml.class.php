@@ -6,6 +6,7 @@
 
 	$Id: xml.class.php 1059 2011-03-01 07:25:09Z monkey $
 */
+namespace ucenter;
 
 function xml_unserialize(&$xml, $isnormal = FALSE) {
 	$xml_parser = new XML($isnormal);

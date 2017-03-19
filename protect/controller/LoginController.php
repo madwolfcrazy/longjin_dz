@@ -24,7 +24,7 @@ class LoginController extends \Controller
         }
         if( $username !== FALSE and $password != FALSE) {
             //do the login process
-            $login_result  =  uc_user_login($username, $password);
+            $login_result  =  \ucenter\uc_user_login($username, $password);
             if($login_result[0] > 0) {
                 if(strtolower(UC_CHARSET) != 'utf-8') {
                     $login_result[1]  =  iconv('utf-8', UC_CHARSET, $login_result[1]);

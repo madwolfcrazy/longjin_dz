@@ -7,6 +7,8 @@
 	$Id: user.php 1174 2014-11-03 04:38:12Z hypowang $
 */
 
+namespace ucenter;
+
 !defined('IN_UC') && exit('Access Denied');
 
 define('UC_USER_CHECK_USERNAME_FAILED', -1);
