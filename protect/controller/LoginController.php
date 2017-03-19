@@ -34,7 +34,7 @@ class LoginController extends \Controller
                 $now     =  new \DateTime();
                 $future  =  new \DateTime("now +2 hours");
                 $base62  =  new Base62;
-                $jti = $base62->encode(random_bytes(16));
+                $jti     =  $base62->encode(random_bytes(16));
                 $payload = [
                     "iat" => $now->getTimeStamp(),
                     "exp" => $future->getTimeStamp(),
