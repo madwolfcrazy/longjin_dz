@@ -25,6 +25,11 @@ class ThreadController extends \Controller
                           ->limit($perpage)
                           ->get();
         //
+        include '../vendor/comsenz/discuzX/src/function_discuzcode.php';
+        foreach($replies as &$row) {
+            $row['message']  = str_replace(["\r","\n"], '',  \discuzx\discuzcode($row['message']));
+        }
+        //
         $URL_pre  =  $this->ci->get('settings')['url_pre'];
         foreach($replies as &$reply) {
             $reply['attachments']  =  ForumAttachmentModel::getByPid($reply['pid'],$URL_pre);
