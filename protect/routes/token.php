@@ -29,7 +29,9 @@ $app->post("/token", function ($request, $response, $arguments) {
         "exp" => $future->getTimeStamp(),
         "jti" => $jti,
         "sub" => @$server["PHP_AUTH_USER"],
-        "scope" => $scopes
+        "scope" => $scopes,
+        "user_id" => -1,
+        "username" => 'Guest',
     ];
     $secret  =  $this->get('settings')['jwt_secret'];
     $token = JWT::encode($payload, $secret, "HS256");

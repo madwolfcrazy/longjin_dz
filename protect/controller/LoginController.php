@@ -27,7 +27,7 @@ class LoginController extends \Controller
             $login_result  =  \ucenter\uc_user_login($username, $password);
             if($login_result[0] > 0) {
                 if(strtolower(UC_CHARSET) != 'utf-8') {
-                    $login_result[1]  =  iconv('utf-8', UC_CHARSET, $login_result[1]);
+                    $login_result[1]  =  iconv(UC_CHARSET, 'utf-8', $login_result[1]);
                 }
                 //return logined jwt
                 $scopes  =  $this->ci->get('settings')['logined_scope'];

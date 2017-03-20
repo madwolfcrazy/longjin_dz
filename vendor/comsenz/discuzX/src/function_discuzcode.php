@@ -187,7 +187,7 @@ function discuzcode($message, $smileyoff = false, $bbcodeoff = false, $htmlon = 
 			'[i=s]', '[i]', '[/i]', '[u]', '[/u]', '[list]', '[list=1]', '[list=a]',
 			'[list=A]', "\r\n[*]", '[*]', '[/list]', '[indent]', '[/indent]', '[/float]'
 			), array(
-			'</span>', '</span>', '</span>', '</span>', '</div>', '<strong>', '</strong>', '<strike>', '</strike>', '<hr class="l" />', '</p>', '<i class="pstatus">', '<i>',
+			'</span>', '</span>', '</span>', '</span>', '</p>', '<strong>', '</strong>', '<strike>', '</strike>', '<hr class="l" />', '</p>', '<i class="pstatus">', '<i>',
 			'</i>', '<u>', '</u>', '<ul>', '<ul type="circle" class="litype_1">', '<ul type="a" class="litype_2">',
 			'<ul type="A" class="litype_3">', '<li>', '<li>', '</ul>', '<blockquote>', '</blockquote>', '</span>'
 			), preg_replace(array(
@@ -211,11 +211,13 @@ function discuzcode($message, $smileyoff = false, $bbcodeoff = false, $htmlon = 
 			"<span style=\"font-size:\\1;\">",
 			"<span style=\"font-size:\\1;\">",
 			"<span style=\"font-family:\\1;\">",
-			"<div style=\"text-align:\\1;\">",
+			"<p style=\"text-align:\\1;\">",
 			"<p style=\"line-height:\\1px;text-indent:\\2em;text-align:\\3;\">",
 			"<span style=\"float:left;margin-right:5px;\">",
 			"<span style=\"float:right;margin-left:5px;\">"
 			), $message));
+        //
+        $message  =  str_replace('<p style="text-align:left;">','<p>',$message);
 
 		if($pid && !defined('IN_MOBILE')) {
 			$message = preg_replace_callback("/\s?\[postbg\]\s*([^\[\<\r\n;'\"\?\(\)]+?)\s*\[\/postbg\]\s?/is", create_function('$matches', 'return parsepostbg($matches[1], '.intval($pid).');'), $message);

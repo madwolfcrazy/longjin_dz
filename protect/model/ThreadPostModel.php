@@ -21,4 +21,20 @@ class ThreadPostModel extends Model
                   ->get();
         return $threads;
     }
+
+    public function parserHidenTag($uid = 0) {
+        if(preg_match('/\[hide\]/i',$this->message) !== FALSE) {
+            // 有回复可见内容
+            // 判断当前用户是否回复
+            if(
+                self::select(self::$Tfields)
+                    ->where(['tid'=>$this->tid,'authorid'=>$uid])
+                    ->count() > 0
+              ){
+                $this->message  =  preg_replace('/\[hide(.*)?\](.*)?(\[\/hide\])/i',"<div class=\"replied-view\"><div>以下内容回复可见：</div><p>$2</p></div>",$this->message);
+            }else{
+                $this->message  =  preg_replace('/\[hide(.*)?\](.*)?(\[\/hide\])/i',"<div class=\"replied-can-view\"><div>以下内容回复可见</div></div>",$this->message);
+            }
+        }
+    }
 }

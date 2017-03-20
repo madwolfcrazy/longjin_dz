@@ -11,6 +11,7 @@ class ThreadController extends \Controller
     protected $threadFields = [];
     public function get($request, $response, $args) 
     {
+        $jwt_scope  =  ($this->ci->get('jwt'));
         $tid  = intval($args['tid']);
         $page =  isset($args['page']) ? intval($args['page']) : 1;
         $perpage  = 20;
@@ -26,12 +27,11 @@ class ThreadController extends \Controller
                           ->get();
         //
         include '../vendor/comsenz/discuzX/src/function_discuzcode.php';
-        foreach($replies as &$row) {
-            $row['message']  = str_replace(["\r","\n"], '',  \discuzx\discuzcode($row['message']));
-        }
         //
         $URL_pre  =  $this->ci->get('settings')['url_pre'];
         foreach($replies as &$reply) {
+            $reply->message  = str_replace(["\r","\n"], '',  \discuzx\discuzcode($reply->message));
+            $reply->parserHidenTag($jwt_scope->user_id);
             $reply['attachments']  =  ForumAttachmentModel::getByPid($reply['pid'],$URL_pre);
         }
         $replyNum  =  ThreadPostModel::where([['tid','=',$tid],['status','>',-1],['first','=',0]])
