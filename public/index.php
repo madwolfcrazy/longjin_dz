@@ -53,7 +53,7 @@ $app->get( '/comment/{newsid}','\controller\NewsController:comment');
 $app->post( '/comment/{newsid:[0-9]+}','\controller\NewsController:create');
 $app->post( '/login','\controller\LoginController:login');
 $app->post( '/thread/{fid}','\controller\ThreadController:createThread');
-$app->post( '/post/{fid}','\controller\ThreadController:createPost');
+$app->post( '/reply/{fid}','\controller\ThreadController:createReply');
 //
 include "../protect/routes/token.php";
 /*
