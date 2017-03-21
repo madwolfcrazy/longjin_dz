@@ -85,8 +85,25 @@ class NewsController extends \Controller
         $offset =  ($page - 1) * $limit;
         $commentBody  =  $request->getParsedBody()['content'];
         $jwt_scope  =  ($this->ci->get('jwt'));
-        if( ($jwt_scope)  && in_array("comment_create", $jwt_scope->scope)) {
-            var_dump('Save comment');
+        if( ($jwt_scope)  && in_array("comment_create", $jwt_scope->scope)
+                && $jwt_scope->user_id > 0
+                ) {
+            if(isset($args['reply_comment_id']) ) {
+                $reply_comment  =  NewsCommentModel::find($args['reply_comment_id']);
+                if($reply_comment) {
+                    $commentBody  .=  '<div class="quote"><blockquote>'.$reply_comment->username.':'.$reply_comment->message.'</blockquote></div>';
+                }
+            }
+            $CM  =  NewsCommentModel::create([
+                    'uid'=>$jwt_scope->user_id,
+                    'username'=>$jwt_scope->username,
+                    'id'=>$newsid,
+                    'idtype'=>'aid',
+                    'dateline'=>time(),
+                    'message'=>$commentBody,
+                    'postip'=>$request->getAttribute('ip_address'),
+            ]);
+            return $response->withJson(['status'=>'ok','comment_id'=>$CM->cid]);
         }else{
             return $response->withJson(['require_high_privilege'=>true]);
         }

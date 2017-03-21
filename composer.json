@@ -4,7 +4,8 @@
         "slim/pdo": "~1.9",
         "illuminate/database": "^5.2",
         "tuupola/slim-jwt-auth": "^2.3",
-        "tuupola/base62": "^0.8.0"
+        "tuupola/base62": "^0.8.0",
+        "akrabat/rka-ip-address-middleware": "^0.5.0"
     },
     "autoload": {
         "classmap": ["protect/controller","protect/helper","protect/model"],
