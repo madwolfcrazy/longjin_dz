@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class ThreadModel extends Model
 {
     protected $table = 'forum_thread';
+    protected $fillable = ['fid','typeid','author','authorid','subject','dateline','lastpost','lastposter'];
+    public $timestamps = FALSE;
+    public $primaryKey  =  'tid';
     protected static $perpage = 20;
     protected static $fields  =  ['pid','tid','first','author','subject','dateline','message','useip'];
     protected static $Tfields  =  ['tid','subject','author','views','authorid','dateline','lastpost','lastposter','replies','heats','displayorder','typeid'];

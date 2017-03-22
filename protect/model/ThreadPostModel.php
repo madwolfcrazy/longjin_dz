@@ -3,13 +3,29 @@
 namespace model;
 
 use Illuminate\Database\Eloquent\Model;
+use \models\ForumPostTableid;
 
 class ThreadPostModel extends Model
 {
     protected $table  =  'forum_post';
+    protected $fillable = ['fid', 'tid', 'first', 'author', 'authorid', 'subject', 'message', ];
+    public $timestamps = FALSE;
+    public $primaryKey  =  'pid';
     protected static $perpage = 20;
     protected static $fields  =  ['pid','tid','first','author','subject','dateline','message','useip'];
     protected static $Tfields  =  ['tid','subject','author','views','authorid','dateline','lastpost','lastposter','replies','heats','displayorder','typeid'];
+
+    public static function boot() {
+        parent::boot();
+        static::creating(
+                function($data) {
+                    $pidModel  =  ForumPostTableid::create();
+                    $data->pid = $pidModel->pid;
+                    exit('hhh');
+                    return true;
+                }
+        );
+    }
 
     public static function getList($fid,$page=1) {
         $offset   =  ($page-1) * static::$perpage;
