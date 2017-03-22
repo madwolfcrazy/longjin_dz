@@ -7,5 +7,5 @@ class ForumModel extends Model
 {
     protected $table    =  'forum_forum';
     public $timestamps  =  FALSE;
-    public $primaryKey  =  'cid';
+    public $primaryKey  =  'fid';
 }

@@ -6,6 +6,7 @@ use \model\ThreadModel;
 use \model\ThreadPostModel;
 use \model\ForumAttachmentModel;
 use \model\ForumPostTableid;
+use \model\ForumModel;
 
 class ThreadController extends \Controller
 {
@@ -47,8 +48,8 @@ class ThreadController extends \Controller
       **/
     public function createThread($request, $response, $args)
     {
-        $body   =  $request->getParsedBody()['content'];
-        $title  =  $request->getParsedBody()['title'];
+        $body   =  $request->getParsedBody()['content']."\n".rand(100000, 1000000);
+        $title  =  $request->getParsedBody()['title'].'_'.rand(10000,99999);
         $fid    = intval($args['fid']);
         $jwt_scope  =  ($this->ci->get('jwt'));
         //forum_thread {fid,typeid,author,authorid,subject,dateline,lastpost,lastposter}
@@ -74,7 +75,7 @@ class ThreadController extends \Controller
                         ];
         $newThreadPost  =  ThreadPostModel::create($threadPost);
         $forumLastInfo  =  "{$newThread->tid}\t{$newThread->subject}\t{$newThread->lastpost}\t{$jwt_scope->username}";
-        $forumModel     =  ForumModel::find($fid);
+        $forumModel     =  ForumModel::where(['fid'=>$fid])->first();
         $forumModel->lastpost  =  $forumLastInfo;
         $forumModel->save();
         return $response->withJson(['tid'=>$newThread->tid]);

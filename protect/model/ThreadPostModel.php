@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class ThreadPostModel extends Model
 {
     protected $table  =  'forum_post';
-    protected $fillable = ['fid', 'tid', 'first', 'author', 'authorid', 'subject', 'message', ];
+    protected $fillable = ['fid', 'tid', 'first', 'author', 'authorid', 'subject', 'message', 'pid'];
     public $timestamps = FALSE;
     protected static $perpage = 20;
     protected static $fields  =  ['pid','tid','first','author','subject','dateline','message','useip'];
-    protected static $Tfields  =  ['tid','subject','author','views','authorid','dateline','lastpost','lastposter','replies','heats','displayorder','typeid'];
+    protected static $Tfields  =  ['pid','tid','subject','author','views','authorid','dateline','lastpost','lastposter','replies','heats','displayorder','typeid'];
 
 
     public static function getList($fid,$page=1) {
@@ -25,11 +25,16 @@ class ThreadPostModel extends Model
         return $threads;
     }
 
-    public static function create($data){
-        if(!isset($data['pid'])) {
+    public static function create(array $attributes = []){
+        if(!isset($attributes['pid'])) {
             $pid  =  ForumPostTableid::create();
-            $data['pid']  =  $pid->getAttribute('pid');
-            parent::create($data);
+            $attributes['pid']  =  $pid->getAttribute('pid');
+            /*
+            $model = new static($attributes);
+            $model->save();
+            return $model;
+            */
+            return parent::create($attributes);
         }
     }
 
