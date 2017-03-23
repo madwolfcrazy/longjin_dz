@@ -53,7 +53,7 @@ $app->get( '/comment/{newsid}','\controller\NewsController:comment');
 $app->post( '/comment/{newsid:[0-9]+}[/{reply_comment_id:[0-9]+}]','\controller\NewsController:create');
 $app->post( '/login','\controller\LoginController:login');
 $app->post( '/thread/{fid}','\controller\ThreadController:createThread');
-$app->post( '/reply/{fid}','\controller\ThreadController:createReply');
+$app->post( '/reply/{tid}','\controller\ThreadController:createPost');
 //
 include "../protect/routes/token.php";
 /*
@@ -94,6 +94,7 @@ $app->add(new \Slim\Middleware\JwtAuthentication( [
     },
 ]));
 
+$checkProxyHeaders = TRUE;
 $trustedProxies = ['10.0.0.1','10.0.0.2'];
 $app->add(new RKA\Middleware\IpAddress($checkProxyHeaders, $trustedProxies));
 

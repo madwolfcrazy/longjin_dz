@@ -48,37 +48,75 @@ class ThreadController extends \Controller
       **/
     public function createThread($request, $response, $args)
     {
-        $body   =  $request->getParsedBody()['content']."\n".rand(100000, 1000000);
-        $title  =  $request->getParsedBody()['title'].'_'.rand(10000,99999);
+        $status =  -1;
+        $body   =  $request->getParsedBody()['content'];
+        $title  =  $request->getParsedBody()['title'];
         $fid    = intval($args['fid']);
         $jwt_scope  =  ($this->ci->get('jwt'));
-        //forum_thread {fid,typeid,author,authorid,subject,dateline,lastpost,lastposter}
-        //forum_thread_post {fid, tid, first, author, authorid, subject, message, }
-        $threadTitle  =  ['fid'=>$fid,
-                            'typeid'=>0,
-                            'author'=>$jwt_scope->username,
-                            'authorid'=>$jwt_scope->user_id,
-                            'dateline'=>time(),
-                            'lastpost'=>time(),
-                            'lastposter'=>$jwt_scope->username,
-                            'subject'=>$title,
+        if( ($jwt_scope)  && in_array("thread_reate", $jwt_scope->scope))
+        {
+            //forum_thread {fid,typeid,author,authorid,subject,dateline,lastpost,lastposter}
+            //forum_thread_post {fid, tid, first, author, authorid, subject, message, }
+            $threadTitle  =  ['fid'=>$fid,
+                                'typeid'=>0,
+                                'author'=>$jwt_scope->username,
+                                'authorid'=>$jwt_scope->user_id,
+                                'dateline'=>time(),
+                                'lastpost'=>time(),
+                                'lastposter'=>$jwt_scope->username,
+                                'subject'=>$title,
+                            ];
+            $newThread   =  ThreadModel::create($threadTitle);
+            $threadPost  =  [
+                                'fid'=>$fid,
+                                'tid'=>$newThread->tid,
+                                'first'=>1,
+                                'author'=>$jwt_scope->username,
+                                'authorid'=>$jwt_scope->user_id,
+                                'subject'=>$title,
+                                'message'=>$body,
                         ];
-        $newThread   =  ThreadModel::create($threadTitle);
-        $threadPost  =  [
-                            'fid'=>$fid,
-                            'tid'=>$newThread->tid,
-                            'first'=>1,
-                            'author'=>$jwt_scope->username,
-                            'authorid'=>$jwt_scope->user_id,
-                            'subject'=>$title,
-                            'message'=>$body,
-                        ];
-        $newThreadPost  =  ThreadPostModel::create($threadPost);
-        $forumLastInfo  =  "{$newThread->tid}\t{$newThread->subject}\t{$newThread->lastpost}\t{$jwt_scope->username}";
-        $forumModel     =  ForumModel::where(['fid'=>$fid])->first();
-        $forumModel->lastpost  =  $forumLastInfo;
-        $forumModel->save();
-        return $response->withJson(['tid'=>$newThread->tid]);
+            $newThreadPost  =  ThreadPostModel::create($threadPost);
+            $forumLastInfo  =  "{$newThread->tid}\t{$newThread->subject}\t{$newThread->lastpost}\t{$jwt_scope->username}";
+            $forumModel     =  ForumModel::where(['fid'=>$fid])->first();
+            $forumModel->lastpost  =  $forumLastInfo;
+            $forumModel->threads   += 1;
+            $forumModel->save();
+            $status = 1;
+        } else {
+            $status = -1;
+        }
+        return $response->withJson(['tid'=>$newThread->tid,'status'=>$status]);
     }
 
+    /**
+      *
+      *
+      **/
+    public function createPost($request, $response, $args)
+    {
+        $body   =  $request->getParsedBody()['content'];
+        $title  =  $request->getParsedBody()['title'];
+        $tid    = isset($args['tid']) ? $args['tid']  : FALSE;
+        $threadModel  =  ThreadModel::find($tid);
+        $jwt_scope    =  ($this->ci->get('jwt'));
+        if(! $threadModel) {
+        }else{
+            $threadPost  =  [
+                                'fid'     =>$threadModel->fid,
+                                'tid'     =>$tid,
+                                'first'   =>0,
+                                'author'  =>$jwt_scope->username,
+                                'authorid'=>$jwt_scope->user_id,
+                                'subject' =>$title,
+                                'message' =>$body,
+                            ];
+            $newThreadPost           =  ThreadPostModel::create($threadPost);
+            $threadModel->lastpost   =  time();
+            $threadModel->lastposter =  $jwt_scope->username;
+            $threadModel->save();
+        }
+        $status  =  1;
+        return $response->withJson(['tid'=>$tid, 'pid'=>$newThreadPost->pid, 'status'=>$status]);
+    }
 }
