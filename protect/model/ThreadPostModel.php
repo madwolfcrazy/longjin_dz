@@ -14,6 +14,13 @@ class ThreadPostModel extends Model
     protected static $Tfields  =  ['pid','tid','subject','author','views','authorid','dateline','lastpost','lastposter','replies','heats','displayorder','typeid'];
 
 
+    /**
+      * 取一些列回帖列表
+      * @param int 版块id
+      * @param int 页码
+      * @return array
+      *
+      **/
     public static function getList($fid,$page=1) {
         $offset   =  ($page-1) * static::$perpage;
         $threads  =  self::select(self::$Tfields)->where([['fid','=',$fid],['displayorder','>','-1']])
@@ -25,6 +32,13 @@ class ThreadPostModel extends Model
         return $threads;
     }
 
+
+    /**
+      * 创建一条记录时的前置处理
+      * 从forumposttableid表获得一个pid
+      * @param array 帖子属性
+      * @return object 返回回帖实例
+      **/
     public static function create(array $attributes = []){
         if(!isset($attributes['pid'])) {
             $pid  =  ForumPostTableid::create();
@@ -38,6 +52,11 @@ class ThreadPostModel extends Model
         }
     }
 
+    /**
+      * 处理回帖信息中的隐藏信息
+      * @param int 用户id
+      * @return null
+      **/
     public function parserHidenTag($uid = 0) {
         if(preg_match('/\[hide\]/i',$this->message) !== FALSE) {
             // 有回复可见内容
