@@ -51,7 +51,7 @@ class ThreadController extends \Controller
         $status =  -1;
         $body   =  $request->getParsedBody()['content'];
         $title  =  $request->getParsedBody()['title'];
-        $fid    = intval($args['fid']);
+        $fid    =  intval($args['fid']);
         $jwt_scope  =  ($this->ci->get('jwt'));
         if( ($jwt_scope)  && in_array("thread_reate", $jwt_scope->scope))
         {
@@ -84,7 +84,7 @@ class ThreadController extends \Controller
             $forumModel->save();
             $status = 1;
         } else {
-            $status = -1;
+            return $response->withJson(['status'=>-1,'message'=>'post thread error' ]);
         }
         return $response->withJson(['tid'=>$newThread->tid,'status'=>$status]);
     }
@@ -98,9 +98,13 @@ class ThreadController extends \Controller
         $body   =  $request->getParsedBody()['content'];
         $title  =  $request->getParsedBody()['title'];
         $tid    = isset($args['tid']) ? $args['tid']  : FALSE;
+        if(!is_numeric($tid)) {
+            return $response->withJson(['status'=>-1,'message'=>'tid error' ]);
+        }
         $threadModel  =  ThreadModel::find($tid);
         $jwt_scope    =  ($this->ci->get('jwt'));
         if(! $threadModel) {
+            return $response->withJson(['status'=>-1,'message'=>'forum not exists' ]);
         }else{
             $threadPost  =  [
                                 'fid'     =>$threadModel->fid,
