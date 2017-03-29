@@ -78,7 +78,7 @@ class NewsController extends \Controller
       *
       *
       **/
-    public function create($request, $response, $args) {
+    public function createComment($request, $response, $args) {
         $newsid =  intval($args['newsid']);
         $page   =  isset($args['page']) ? intval($args['page']) : 1;
         $limit  =  20;
@@ -94,6 +94,7 @@ class NewsController extends \Controller
                     $commentBody  .=  '<div class="quote"><blockquote>'.$reply_comment->username.':'.$reply_comment->message.'</blockquote></div>';
                 }
             }
+            //关键词过滤 回复
             $CM  =  NewsCommentModel::create([
                     'uid'=>$jwt_scope->user_id,
                     'username'=>$jwt_scope->username,
