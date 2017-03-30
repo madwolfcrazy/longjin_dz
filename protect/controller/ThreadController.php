@@ -57,6 +57,7 @@ class ThreadController extends \Controller
         {
             //forum_thread {fid,typeid,author,authorid,subject,dateline,lastpost,lastposter}
             //forum_thread_post {fid, tid, first, author, authorid, subject, message, }
+            // 判断用户权限 与版块发帖规则
             $threadTitle  =  ['fid'=>$fid,
                                 'typeid'=>0,
                                 'author'=>$jwt_scope->username,
