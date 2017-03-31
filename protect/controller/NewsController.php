@@ -85,6 +85,13 @@ class NewsController extends \Controller
         $offset =  ($page - 1) * $limit;
         $commentBody  =  $request->getParsedBody()['content'];
         $jwt_scope  =  ($this->ci->get('jwt'));
+        //判断文章是否允许评论
+        $articleModel  =  NewsModel::find($newsid);
+        if(! $articleModel OR !$articleModel->allowcomment) {
+            $result['result']  =  'fail';
+            $result['message']  =  'The article not allow comment';
+            return $response->withJson($result);
+        }
         if( ($jwt_scope)  && in_array("comment_create", $jwt_scope->scope)
                 && $jwt_scope->user_id > 0
                 ) {
