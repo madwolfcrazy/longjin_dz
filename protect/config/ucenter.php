@@ -13,7 +13,7 @@ define('UC_DBCONNECT', 0);
 
 define('UC_CHARSET', 'gbk');
 define('UC_KEY', 'Tci6J172I027F9Gdg8Y19620GbU7ddh7s7ke14r1yfe5d4fax7jen49fM2g4aa45');
-define('UC_API', 'http://60.217.228.172/DZX2.5/uc_server');
+define('UC_API', 'http://127.0.0.1/DZX2.5/uc_server');
 define('UC_APPID', '1');
 define('UC_IP', '');
 define('UC_PPP', 20);
